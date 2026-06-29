@@ -1274,6 +1274,7 @@ function showJoinStatus(msg,type){
 
 /* ─── BATTLE INTRO ANIMATION ─── */
 function runBattleIntro(roomData){
+  timerSecs = roomData.timerSecs || timerSecs;
   const p1=roomData.player1;
   const p2=roomData.player2||{name:'Lawan',avatar:''};
   const me   = myKey==='player1' ? p1 : p2;
