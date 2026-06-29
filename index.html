@@ -421,6 +421,13 @@ body{
           <div class="room-code-label">Kode Room</div>
           <div class="room-code-val" id="room-code-val">------</div>
         </div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div class="name-input-label">Waktu per soal (detik)</div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <input class="name-input" id="timer-input" type="number" min="5" max="120" value="30" style="width:90px;text-align:center;font-size:20px;font-weight:700;padding:10px"/>
+            <div style="font-size:12px;color:#AAAAAA;line-height:1.5">Jika waktu habis,<br>soal terakhir disubmit otomatis</div>
+          </div>
+        </div>
         <div class="room-waiting">
           <div class="waiting-ring" style="width:28px;height:28px;border-width:2px;flex-shrink:0"></div>
           <div class="room-waiting-info">
@@ -428,9 +435,7 @@ body{
             <div class="room-waiting-sub">Bagikan kode di atas kepada lawan</div>
           </div>
         </div>
-        <div class="room-players" id="room-players-list">
-          <!-- filled dynamically -->
-        </div>
+        <div class="room-players" id="room-players-list"></div>
         <div id="create-room-status" class="status-msg info" style="display:none"></div>
       </div>
       <div class="footer">
@@ -464,6 +469,16 @@ body{
         <button class="close-btn" id="close-btn">
           <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1 1L9 9M9 1L1 9" stroke="#888" stroke-width="1.6" stroke-linecap="round"/></svg>
         </button>
+      </div>
+      <!-- Timer bar -->
+      <div id="timer-bar-wrap" style="margin-bottom:10px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px">
+          <span style="font-size:10px;font-weight:600;letter-spacing:.1em;color:#AAAAAA;text-transform:uppercase">Waktu</span>
+          <span id="timer-display" style="font-size:14px;font-weight:700;color:#1A1A1A;font-variant-numeric:tabular-nums">30</span>
+        </div>
+        <div style="height:4px;background:#EBEBEB;border-radius:3px;overflow:hidden">
+          <div id="timer-bar" style="height:100%;background:#1A1A1A;border-radius:3px;transition:width .9s linear,background .3s"></div>
+        </div>
       </div>
       <div class="battle-tag" id="battle-tag">
         <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1L7.5 4.5H11L8.5 6.5L9.5 10L6 8L2.5 10L3.5 6.5L1 4.5H4.5z" fill="currentColor"/></svg>
@@ -555,7 +570,7 @@ body{
 <!-- Firebase SDK -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, set, get, update, onValue, off, push, serverTimestamp }
+import { getDatabase, ref, set, get, update, onValue, off, push }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
 /* ─────────────── FIREBASE CONFIG ─────────────── */
@@ -714,7 +729,12 @@ let questions      = [];
 let cur            = 0;
 let answers        = [];
 let animating      = false;
-let roomListener   = null;
+let roomListenerRef   = null;   // the actual Firebase ref being listened to
+let roomListenerCb    = null;   // the callback so we can off() it properly
+let resultShown    = false;     // guard: prevent double result
+let timerSecs      = 30;        // per-question time limit
+let timerRemaining = 30;
+let timerInterval  = null;
 
 /* ─────────────── AUDIO ─────────────── */
 const actx = new (window.AudioContext || window.webkitAudioContext)();
@@ -834,9 +854,10 @@ function genCode(){
 }
 
 function stopRoomListener(){
-  if(roomListener&&roomId){
-    off(ref(db,'rooms/'+roomId),roomListener);
-    roomListener=null;
+  if(roomListenerRef && roomListenerCb){
+    off(roomListenerRef, 'value', roomListenerCb);
+    roomListenerRef = null;
+    roomListenerCb  = null;
   }
 }
 
@@ -908,11 +929,13 @@ async function enterCreateRoom(){
   const code=genCode();
   roomId=code;
   myKey='player1';
+  timerSecs = Math.max(5, Math.min(120, parseInt(document.getElementById('timer-input').value)||30));
 
   const roomData={
     code,
     status:'waiting',
     createdAt: Date.now(),
+    timerSecs,
     questions: questions,
     player1:{
       name: playerName,
@@ -934,19 +957,18 @@ async function enterCreateRoom(){
 
 function listenCreateRoom(code){
   renderRoomPlayers(null);
-  const roomRef=ref(db,'rooms/'+code);
-  roomListener=onValue(roomRef,(snap)=>{
+  stopRoomListener();
+  roomListenerRef = ref(db,'rooms/'+code);
+  roomListenerCb  = (snap)=>{
     if(!snap.exists()) return;
     const data=snap.val();
     renderRoomPlayers(data);
-
     if(data.status==='playing'){
       stopRoomListener();
-      showScreen('screen-create-room','screen-quiz',()=>{
-        setupQuiz(data);
-      });
+      showScreen('screen-create-room','screen-quiz',()=>{ setupQuiz(data); });
     }
-  });
+  };
+  onValue(roomListenerRef, roomListenerCb);
 }
 
 function renderRoomPlayers(data){
@@ -1016,6 +1038,7 @@ document.getElementById('btn-join-confirm').onclick=async()=>{
     roomId=code;
     myKey='player2';
     questions=data.questions||FALLBACK_QUESTIONS;
+    timerSecs=data.timerSecs||30;
 
     await update(ref(db,'rooms/'+code),{
       'player2/name': playerName,
@@ -1074,25 +1097,29 @@ function setupQuiz(roomData){
   `;
 
   renderQuestion();
+  startTimer();
   listenRoomDuringQuiz();
 }
 
 /* ─────────────── ROOM LISTENER DURING QUIZ ─────────────── */
 function listenRoomDuringQuiz(){
   stopRoomListener();
-  const roomRef=ref(db,'rooms/'+roomId);
-  roomListener=onValue(roomRef,(snap)=>{
+  resultShown = false;
+  roomListenerRef = ref(db,'rooms/'+roomId);
+  roomListenerCb  = (snap)=>{
     if(!snap.exists())return;
+    if(resultShown)return;  // guard: don't fire twice
     const data=snap.val();
-    // if both done → show result
     if(data.player1?.done && data.player2?.done){
+      resultShown=true;
       stopRoomListener();
       const cs=currentScreen();
       if(cs==='screen-waiting-opponent'||cs==='screen-quiz'){
         showBattleResult(data);
       }
     }
-  });
+  };
+  onValue(roomListenerRef, roomListenerCb);
 }
 
 /* ─────────────── PROGRESS ─────────────── */
@@ -1105,6 +1132,59 @@ function renderProgress(){
     d.className='pd'+(i<=cur?' on':'');
     progressEl.insertBefore(d,closeBtn);
   });
+}
+
+/* ─────────────── TIMER ─────────────── */
+function stopTimer(){
+  if(timerInterval){ clearInterval(timerInterval); timerInterval=null; }
+}
+
+function startTimer(){
+  stopTimer();
+  timerRemaining = timerSecs;
+  updateTimerUI(timerRemaining, timerSecs);
+  timerInterval = setInterval(()=>{
+    timerRemaining--;
+    updateTimerUI(timerRemaining, timerSecs);
+    if(timerRemaining <= 0){
+      stopTimer();
+      // auto-submit current question and move on
+      autoAdvance();
+    }
+  }, 1000);
+}
+
+function updateTimerUI(remaining, total){
+  const disp = document.getElementById('timer-display');
+  const bar  = document.getElementById('timer-bar');
+  if(!disp||!bar) return;
+  disp.textContent = remaining;
+  const pct = Math.max(0, remaining/total*100);
+  bar.style.width = pct+'%';
+  // colour: green → yellow → red
+  if(pct > 50)      { bar.style.background='#1A1A1A'; disp.style.color='#1A1A1A'; }
+  else if(pct > 25) { bar.style.background='#C47A00'; disp.style.color='#C47A00'; }
+  else              { bar.style.background='#C04040'; disp.style.color='#C04040'; }
+}
+
+function autoAdvance(){
+  if(animating) return;
+  // save current answer (whatever is checked, even null)
+  const sel = optsEl.querySelector('input:checked');
+  if(sel) answers[cur] = parseInt(sel.value);
+  // else answers[cur] stays null (unanswered)
+
+  sndNext();
+  if(cur < questions.length-1){
+    animateCard('fly-out','fly-in',()=>{ cur++; renderQuestion(); startTimer(); });
+  } else {
+    // last question — submit
+    animateCard('fly-out','fly-in',()=>{
+      document.getElementById('screen-quiz').classList.remove('active');
+      submitAnswers();
+    });
+    sndFinish();
+  }
 }
 
 /* ─────────────── RENDER QUESTION ─────────────── */
@@ -1145,8 +1225,10 @@ btnNext.addEventListener('click',()=>{
   if(sel)answers[cur]=parseInt(sel.value);
   sndNext();
   if(cur<questions.length-1){
-    animateCard('fly-out','fly-in',()=>{cur++;renderQuestion();});
+    stopTimer();
+    animateCard('fly-out','fly-in',()=>{ cur++; renderQuestion(); startTimer(); });
   } else {
+    stopTimer();
     animateCard('fly-out','fly-in',()=>{
       document.getElementById('screen-quiz').classList.remove('active');
       submitAnswers();
@@ -1158,13 +1240,15 @@ btnNext.addEventListener('click',()=>{
 btnBack.addEventListener('click',()=>{
   if(animating||cur===0)return;
   sndBack();
-  animateCard('fly-back-out','fly-in-back',()=>{cur--;renderQuestion();});
+  stopTimer();
+  animateCard('fly-back-out','fly-in-back',()=>{ cur--; renderQuestion(); startTimer(); });
 });
 
 closeBtn.addEventListener('click',()=>{
   if(animating)return;
   sndBack();
   if(confirm('Keluar dari battle? Progress akan hilang.')){
+    stopTimer();
     stopRoomListener();
     resetAll();
     animateCard('fly-out','fly-in',()=>{
@@ -1176,44 +1260,35 @@ closeBtn.addEventListener('click',()=>{
 
 /* ─────────────── SUBMIT ANSWERS ─────────────── */
 async function submitAnswers(){
+  stopTimer();
+
   let score=0;
   questions.forEach((q,i)=>{
     const ans=q.ans!==undefined?q.ans:q.answer;
     if(answers[i]===ans)score++;
   });
 
-  // show waiting screen
+  // show waiting screen first
   const roomSnap=await get(ref(db,'rooms/'+roomId));
   const roomData=roomSnap.val();
   const otherKey=myKey==='player1'?'player2':'player1';
-  const opponent=roomData[otherKey];
+  const opponent=roomData?.[otherKey];
 
   document.getElementById('waiting-opp-av').innerHTML=getAvatarSVG(opponent?.avatar||'');
   document.getElementById('waiting-opp-name').textContent=opponent?.name||'Lawan';
   document.getElementById('waiting-opp-progress').textContent='Sedang mengerjakan...';
-
   document.getElementById('screen-waiting-opponent').classList.add('active');
 
-  // save to firebase
+  // Write done=true to Firebase THEN let the listener handle showing result
+  // resultShown guard in the listener prevents double-fire
   try{
     const updates={};
     updates[`rooms/${roomId}/${myKey}/done`]=true;
     updates[`rooms/${roomId}/${myKey}/score`]=score;
     updates[`rooms/${roomId}/${myKey}/answers`]=answers;
     await update(ref(db),updates);
-  } catch(e){}
-
-  // check if both done already
-  const snap2=await get(ref(db,'rooms/'+roomId));
-  if(snap2.exists()){
-    const d=snap2.val();
-    if(d.player1?.done && d.player2?.done){
-      stopRoomListener();
-      showBattleResult(d);
-      return;
-    }
-  }
-  // listener will pick it up
+  } catch(e){ console.error('submit error',e); }
+  // Listener (listenRoomDuringQuiz) will detect both done and call showBattleResult
 }
 
 /* ─────────────── BATTLE RESULT ─────────────── */
@@ -1296,7 +1371,12 @@ async function showBattleResult(roomData){
   });
 
   const cs=currentScreen();
-  showScreen(cs,'screen-battle-result');
+  // cs could be screen-waiting-opponent or screen-quiz (if both finish at same time)
+  // remove whichever is active, show battle result cleanly
+  animateCard('fly-out','fly-in',()=>{
+    document.querySelectorAll('.screen.active').forEach(s=>s.classList.remove('active'));
+    document.getElementById('screen-battle-result').classList.add('active');
+  });
 }
 
 document.getElementById('btn-battle-restart').onclick=()=>{
@@ -1320,15 +1400,19 @@ document.getElementById('btn-restart').addEventListener('click',()=>{
 });
 
 function resetAll(){
+  stopTimer();
   stopRoomListener();
-  selectedAvatar=null;
-  playerName='';
-  playerRole=null;
-  roomId=null;
-  myKey=null;
-  cur=0;
-  answers=[];
-  animating=false;
+  resultShown    = false;
+  selectedAvatar = null;
+  playerName     = '';
+  playerRole     = null;
+  roomId         = null;
+  myKey          = null;
+  cur            = 0;
+  answers        = [];
+  animating      = false;
+  timerSecs      = 30;
+  timerRemaining = 30;
   nameInput.value='';
   document.getElementById('btn-name-next').disabled=true;
   document.getElementById('btn-name-next').style.opacity='.4';
@@ -1339,6 +1423,8 @@ function resetAll(){
   document.getElementById('join-code-input').value='';
   const js=document.getElementById('join-room-status');
   js.style.display='none';
+  // also hide waiting screen if visible
+  document.getElementById('screen-waiting-opponent').classList.remove('active');
 }
 
 /* ─────────────── FALLBACK QUESTIONS ─────────────── */
