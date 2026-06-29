@@ -39,7 +39,32 @@ body{
 .screen.active{display:flex}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 
-/* ── SPLASH ── */
+/* SHAKE */
+@keyframes shake{
+  0%,100%{transform:none}
+  10%{transform:translateX(-8px) rotate(-1.5deg)}
+  20%{transform:translateX(8px) rotate(1.5deg)}
+  30%{transform:translateX(-6px) rotate(-1deg)}
+  40%{transform:translateX(6px) rotate(1deg)}
+  50%{transform:translateX(-4px) rotate(-.5deg)}
+  60%{transform:translateX(4px) rotate(.5deg)}
+  70%{transform:translateX(-3px)}
+  80%{transform:translateX(3px)}
+  90%{transform:translateX(-1px)}
+}
+.shake-card{animation:shake .6s cubic-bezier(.36,.07,.19,.97) both}
+@keyframes shakeScene{
+  0%,100%{transform:none}
+  15%{transform:translateX(-6px)}
+  30%{transform:translateX(6px)}
+  45%{transform:translateX(-4px)}
+  60%{transform:translateX(4px)}
+  75%{transform:translateX(-2px)}
+  90%{transform:translateX(2px)}
+}
+.shake-scene{animation:shakeScene 5s ease-in-out}
+
+/* SPLASH */
 .splash-logo{display:flex;align-items:center;justify-content:center;margin:auto 0 20px}
 .splash-title{font-size:26px;font-weight:700;color:#1A1A1A;text-align:center;letter-spacing:-.5px;margin-bottom:6px}
 .splash-sub{font-size:13px;color:#AAAAAA;text-align:center;margin-bottom:28px;line-height:1.5}
@@ -56,39 +81,39 @@ body{
 .btn-start.secondary:hover{background:#E8E8E6}
 .splash-hint{font-size:11px;color:#CCCCCC;text-align:center;margin-top:8px}
 
-/* ── STEP LABELS ── */
+/* STEP LABELS */
 .step-label{font-size:10px;font-weight:600;letter-spacing:.12em;color:#BBBBBB;text-transform:uppercase;margin-bottom:8px}
 .step-title{font-size:20px;font-weight:600;color:#1A1A1A;margin-bottom:16px;line-height:1.3}
 
-/* ── AVATAR GRID: 4 cols, proper wrap ── */
+/* AVATAR GRID: 5 cols */
 .avatars{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:8px;
+  grid-template-columns:repeat(5,1fr);
+  gap:7px;
   margin-bottom:auto;
   width:100%;
 }
 .av-btn{
-  display:flex;flex-direction:column;align-items:center;gap:6px;
-  background:#F4F4F2;border:2px solid transparent;border-radius:14px;
-  padding:10px 6px 8px;cursor:pointer;transition:all .18s;
+  display:flex;flex-direction:column;align-items:center;gap:5px;
+  background:#F4F4F2;border:2px solid transparent;border-radius:12px;
+  padding:8px 4px 7px;cursor:pointer;transition:all .18s;
   min-width:0;width:100%;
 }
 .av-btn:hover{background:#ECECEA;transform:translateY(-2px)}
 .av-btn.selected{border-color:#1A1A1A;background:#EDEDED;transform:translateY(-2px)}
 .av-face{
-  width:44px;height:44px;border-radius:50%;
+  width:40px;height:40px;border-radius:50%;
   background:#E4E4E2;flex-shrink:0;
   display:flex;align-items:center;justify-content:center;
   overflow:visible;transition:transform .2s;
   position:relative;
 }
-.av-face svg{display:block;width:44px;height:44px;flex-shrink:0}
+.av-face svg{display:block;width:40px;height:40px;flex-shrink:0}
 .av-btn.selected .av-face{transform:scale(1.1)}
-.av-name{font-size:9px;color:#999;font-weight:500;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%;padding:0 2px}
+.av-name{font-size:8px;color:#999;font-weight:500;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%;padding:0 2px}
 .av-btn.selected .av-name{color:#1A1A1A;font-weight:700}
 
-/* ── NAME INPUT ── */
+/* NAME INPUT */
 .name-wrap{flex:1;display:flex;flex-direction:column;justify-content:center;gap:20px}
 .name-input-group{display:flex;flex-direction:column;gap:8px}
 .name-input-label{font-size:11px;color:#AAAAAA;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
@@ -107,7 +132,7 @@ body{
 .name-preview-label{font-size:10px;color:#BBBBBB;text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px}
 .name-preview-val{font-size:15px;font-weight:600;color:#1A1A1A}
 
-/* ── ROOM SCREENS ── */
+/* ROOM SCREENS */
 .room-section{display:flex;flex-direction:column;gap:16px;flex:1;justify-content:center}
 .room-code-display{
   background:#1A1A1A;border-radius:16px;padding:20px;text-align:center;
@@ -125,7 +150,6 @@ body{
 .room-player-tag{font-size:10px;color:#AAAAAA}
 .room-player-dot{width:8px;height:8px;border-radius:50%;background:#D0D0D0;flex-shrink:0}
 .room-player-dot.ready{background:#1A1A1A}
-
 .join-input{
   background:#F2F2F0;border:1.5px solid #E0E0DE;border-radius:11px;
   padding:14px;font-size:22px;font-weight:700;color:#1A1A1A;outline:none;
@@ -134,7 +158,7 @@ body{
 }
 .join-input:focus{border-color:#1A1A1A}
 
-/* ── BATTLE LABEL ── */
+/* BATTLE LABEL */
 .battle-tag{
   display:inline-flex;align-items:center;gap:6px;
   background:#1A1A1A;color:#F5F5F5;
@@ -150,7 +174,7 @@ body{
 .battle-vs-name{font-size:11px;font-weight:600;color:#1A1A1A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:80px}
 .battle-vs-sep{font-size:11px;font-weight:700;color:#AAAAAA}
 
-/* ── PROGRESS ── */
+/* PROGRESS */
 .progress{display:flex;align-items:center;gap:5px;margin-bottom:22px}
 .pd{height:3px;border-radius:2px;flex:1;background:#DEDEDE;transition:background .35s}
 .pd.on{background:#1A1A1A}
@@ -162,7 +186,7 @@ body{
 }
 .close-btn:hover{background:#D0D0D0}
 
-/* ── QUIZ HEADER ── */
+/* QUIZ HEADER */
 .quiz-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
 .quiz-player-av{width:28px;height:28px;border-radius:50%;background:#E8E8E8;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden}
 .quiz-player-name{font-size:12px;font-weight:600;color:#555;flex:1}
@@ -170,7 +194,7 @@ body{
 .q-text{font-size:17px;font-weight:500;color:#1A1A1A;line-height:1.45;margin-bottom:18px;min-height:52px}
 .sel-label{font-size:9.5px;font-weight:600;letter-spacing:.13em;color:#C0C0C0;text-transform:uppercase;margin-bottom:13px}
 
-/* ── OPTIONS ── */
+/* OPTIONS */
 .opts{display:flex;flex-direction:column;gap:10px;margin-bottom:auto}
 .opt{display:flex;align-items:center;gap:12px;cursor:pointer;user-select:none}
 .opt input[type=radio]{display:none}
@@ -190,7 +214,7 @@ body{
 .opt-lbl{font-size:14px;color:#2A2A2A;transition:color .12s;line-height:1.4}
 .opt:hover .opt-lbl{color:#000}
 
-/* ── FOOTER ── */
+/* FOOTER */
 .footer{display:flex;align-items:center;justify-content:flex-end;gap:10px;margin-top:20px}
 .btn-back{background:none;border:none;font-size:14px;color:#ABABAB;cursor:pointer;padding:10px 14px;font-weight:500;transition:color .15s}
 .btn-back:hover{color:#333}
@@ -209,7 +233,7 @@ body{
 }
 .btn-danger:hover{background:#EDEDED;color:#1A1A1A}
 
-/* ── WAITING ANIMATION ── */
+/* WAITING ANIMATION */
 .waiting-screen{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px}
 .waiting-ring{
   width:72px;height:72px;border-radius:50%;
@@ -228,14 +252,13 @@ body{
 .waiting-dot:nth-child(2){animation-delay:.2s}
 .waiting-dot:nth-child(3){animation-delay:.4s}
 @keyframes dotPulse{0%,80%,100%{background:#D0D0D0;transform:scale(.8)}40%{background:#1A1A1A;transform:scale(1)}}
-
 .waiting-opponent{display:flex;align-items:center;gap:12px;background:#F5F5F3;border-radius:12px;padding:14px;width:100%}
 .waiting-opp-av{width:40px;height:40px;border-radius:50%;background:#E8E8E8;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden}
 .waiting-opp-info{flex:1}
 .waiting-opp-name{font-size:13px;font-weight:600;color:#1A1A1A;margin-bottom:2px}
 .waiting-opp-sub{font-size:11px;color:#AAAAAA}
 
-/* ── BATTLE RESULT ── */
+/* BATTLE RESULT */
 .battle-result-header{text-align:center;margin-bottom:16px}
 .battle-winner-badge{
   display:inline-flex;align-items:center;gap:6px;
@@ -246,7 +269,6 @@ body{
 .battle-winner-badge.draw{background:#888}
 .battle-title{font-size:20px;font-weight:700;color:#1A1A1A;margin-bottom:4px}
 .battle-sub{font-size:12px;color:#AAAAAA}
-
 .battle-score-row{display:flex;align-items:stretch;gap:10px;margin-bottom:16px}
 .battle-score-card{
   flex:1;background:#F5F5F3;border-radius:14px;padding:14px 10px;
@@ -263,7 +285,6 @@ body{
 .battle-score-pts{font-size:28px;font-weight:700;color:#1A1A1A;line-height:1}
 .battle-score-label{font-size:9px;color:#AAAAAA;text-transform:uppercase;letter-spacing:.1em}
 .battle-score-vs{font-size:12px;font-weight:700;color:#AAAAAA;align-self:center;flex-shrink:0}
-
 .recap{width:100%;display:flex;flex-direction:column;gap:6px;max-height:160px;overflow-y:auto;margin-bottom:14px}
 .recap::-webkit-scrollbar{width:3px}
 .recap::-webkit-scrollbar-thumb{background:#D0D0D0;border-radius:2px}
@@ -273,7 +294,6 @@ body{
 .recap-a{font-size:12px;font-weight:500;color:#1A1A1A}
 .recap-item.wrong .recap-a{color:#AAA;text-decoration:line-through}
 .recap-correct-ans{font-size:10.5px;color:#555;margin-top:2px}
-
 .btn-restart{
   background:#1A1A1A;color:#F5F5F5;border:none;border-radius:11px;
   padding:10px;font-size:13px;font-weight:600;cursor:pointer;
@@ -282,7 +302,7 @@ body{
 }
 .btn-restart:hover{background:#333}
 
-/* ── ERROR / STATUS ── */
+/* ERROR / STATUS */
 .status-msg{
   font-size:11px;font-weight:500;text-align:center;padding:8px 12px;
   border-radius:8px;margin-top:8px;
@@ -291,7 +311,7 @@ body{
 .status-msg.info{color:#555;background:#F0F0EE}
 .status-msg.success{color:#1A6A1A;background:#F0FFF0}
 
-/* ── SOLO RESULT ── */
+/* SOLO RESULT */
 .result-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
 .result-av{width:44px;height:44px;border-radius:50%;background:#E8E8E8;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden}
 .result-player-name{font-size:15px;font-weight:700;color:#1A1A1A}
@@ -306,7 +326,7 @@ body{
 .r-score-label{font-size:14px;font-weight:600;color:#1A1A1A}
 .r-score-sub{font-size:11px;color:#AAAAAA;margin-top:2px}
 
-/* ── TRANSITIONS ── */
+/* TRANSITIONS */
 @keyframes flyOut{
   0%{transform:translateX(0) translateY(0);opacity:1}
   60%{opacity:.5}
@@ -337,6 +357,86 @@ body{
 
 .divider{height:1px;background:#F0F0EE;margin:4px 0}
 .recap-section-title{font-size:10px;font-weight:700;letter-spacing:.1em;color:#AAAAAA;text-transform:uppercase;margin-bottom:8px}
+
+/* ── BATTLE INTRO SCREEN ── */
+#screen-battle-intro{
+  display:none;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:0;
+  animation:none;
+}
+#screen-battle-intro.active{display:flex}
+.intro-wrap{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  width:100%;flex:1;gap:8px;
+}
+@keyframes introSlideLeft{
+  0%{transform:translateX(-120px);opacity:0}
+  50%{transform:translateX(10px);opacity:1}
+  100%{transform:translateX(0);opacity:1}
+}
+@keyframes introSlideRight{
+  0%{transform:translateX(120px);opacity:0}
+  50%{transform:translateX(-10px);opacity:1}
+  100%{transform:translateX(0);opacity:1}
+}
+@keyframes introVS{
+  0%{transform:scale(0) rotate(-180deg);opacity:0}
+  60%{transform:scale(1.3) rotate(5deg);opacity:1}
+  80%{transform:scale(0.95) rotate(-2deg)}
+  100%{transform:scale(1) rotate(0deg);opacity:1}
+}
+@keyframes introCountdown{
+  0%{transform:scale(2);opacity:0}
+  30%{transform:scale(1);opacity:1}
+  70%{transform:scale(1);opacity:1}
+  100%{transform:scale(.4);opacity:0}
+}
+@keyframes introPulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(26,26,26,0.4)}
+  50%{box-shadow:0 0 0 18px rgba(26,26,26,0)}
+}
+.intro-player-card{
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  padding:18px 14px;border-radius:18px;background:#F4F4F2;
+  width:110px;flex-shrink:0;
+  opacity:0;
+}
+.intro-player-card.me{animation:introSlideLeft .6s ease .1s forwards}
+.intro-player-card.opp{animation:introSlideRight .6s ease .3s forwards}
+.intro-av{width:56px;height:56px;border-radius:50%;background:#E4E4E2;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
+.intro-av svg{width:56px;height:56px}
+.intro-av.pulse{animation:introPulse 1s infinite}
+.intro-name{font-size:11px;font-weight:700;color:#1A1A1A;text-align:center;max-width:95px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.intro-tag{font-size:9px;color:#AAAAAA;text-align:center}
+.intro-vs-wrap{
+  display:flex;align-items:center;justify-content:center;
+  width:42px;height:42px;border-radius:50%;background:#1A1A1A;
+  color:#F5F5F5;font-size:13px;font-weight:800;letter-spacing:.08em;
+  flex-shrink:0;
+  opacity:0;animation:introVS .5s cubic-bezier(.34,1.56,.64,1) .7s forwards;
+}
+.intro-players-row{
+  display:flex;align-items:center;gap:10px;justify-content:center;width:100%;
+}
+.intro-countdown{
+  font-size:60px;font-weight:800;color:#1A1A1A;
+  opacity:0;
+  animation:introCountdown .85s ease forwards;
+  line-height:1;
+  letter-spacing:-.02em;
+}
+.intro-battle-text{
+  font-size:16px;font-weight:700;color:#1A1A1A;letter-spacing:.12em;text-transform:uppercase;
+  opacity:0;
+  text-align:center;
+}
+@keyframes introBattleText{
+  0%{opacity:0;transform:scale(.7)}
+  40%{opacity:1;transform:scale(1.08)}
+  70%{opacity:1;transform:scale(1)}
+  100%{opacity:0;transform:scale(.8)}
+}
+.intro-battle-text.go{animation:introBattleText .9s ease forwards}
+.intro-sub{font-size:12px;color:#AAAAAA;text-align:center;margin-top:4px}
 </style>
 </head>
 <body>
@@ -347,7 +447,7 @@ body{
 
   <div class="card" id="main-card">
 
-    <!-- ① SPLASH -->
+    <!-- SPLASH -->
     <div class="screen active" id="screen-splash">
       <div class="splash-logo">
         <svg width="72" height="72" viewBox="0 0 72 72" fill="none">
@@ -373,7 +473,7 @@ body{
       <div class="splash-hint">Pilih avatar &amp; nama setelah ini</div>
     </div>
 
-    <!-- ② AVATAR PICK -->
+    <!-- AVATAR PICK -->
     <div class="screen" id="screen-avatar">
       <div class="step-label">Langkah 1 dari 2</div>
       <div class="step-title">Pilih avatarmu</div>
@@ -386,14 +486,14 @@ body{
       </div>
     </div>
 
-    <!-- ③ NAME INPUT -->
+    <!-- NAME INPUT -->
     <div class="screen" id="screen-name">
       <div class="step-label">Langkah 2 dari 2</div>
       <div class="step-title">Siapa namamu?</div>
       <div class="name-wrap">
         <div class="name-preview" id="name-preview">
           <div class="name-preview-av" id="name-preview-av"></div>
-          <div class="name-preview-info">
+          <div>
             <div class="name-preview-label">Player</div>
             <div class="name-preview-val" id="name-preview-val">—</div>
           </div>
@@ -412,7 +512,7 @@ body{
       </div>
     </div>
 
-    <!-- ④ CREATE ROOM — waiting for opponent -->
+    <!-- CREATE ROOM -->
     <div class="screen" id="screen-create-room">
       <div class="step-label">Buat Room</div>
       <div class="step-title">Bagikan kode ini</div>
@@ -446,7 +546,7 @@ body{
       </div>
     </div>
 
-    <!-- ⑤ JOIN ROOM — input code -->
+    <!-- JOIN ROOM -->
     <div class="screen" id="screen-join-room">
       <div class="step-label">Join Battle</div>
       <div class="step-title">Masukkan kode room</div>
@@ -463,14 +563,18 @@ body{
       </div>
     </div>
 
-    <!-- ⑥ QUIZ -->
+    <!-- BATTLE INTRO -->
+    <div class="screen" id="screen-battle-intro">
+      <div class="intro-wrap" id="intro-wrap"></div>
+    </div>
+
+    <!-- QUIZ -->
     <div class="screen" id="screen-quiz">
       <div class="progress" id="progress">
         <button class="close-btn" id="close-btn">
           <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1 1L9 9M9 1L1 9" stroke="#888" stroke-width="1.6" stroke-linecap="round"/></svg>
         </button>
       </div>
-      <!-- Timer bar -->
       <div id="timer-bar-wrap" style="margin-bottom:10px">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px">
           <span style="font-size:10px;font-weight:600;letter-spacing:.1em;color:#AAAAAA;text-transform:uppercase">Waktu</span>
@@ -480,13 +584,11 @@ body{
           <div id="timer-bar" style="height:100%;background:#1A1A1A;border-radius:3px;transition:width .9s linear,background .3s"></div>
         </div>
       </div>
-      <div class="battle-tag" id="battle-tag">
+      <div class="battle-tag">
         <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1L7.5 4.5H11L8.5 6.5L9.5 10L6 8L2.5 10L3.5 6.5L1 4.5H4.5z" fill="currentColor"/></svg>
         BATTLE
       </div>
-      <div class="battle-vs" id="battle-vs-bar">
-        <!-- filled dynamically -->
-      </div>
+      <div class="battle-vs" id="battle-vs-bar"></div>
       <div class="quiz-header">
         <div class="quiz-player-av" id="quiz-player-av"></div>
         <div class="quiz-player-name" id="quiz-player-name"></div>
@@ -504,7 +606,7 @@ body{
       </div>
     </div>
 
-    <!-- ⑦ WAITING FOR OPPONENT AFTER FINISH -->
+    <!-- WAITING FOR OPPONENT AFTER FINISH -->
     <div class="screen" id="screen-waiting-opponent">
       <div class="waiting-screen">
         <div class="waiting-ring"></div>
@@ -515,7 +617,7 @@ body{
           <div class="waiting-dot"></div>
           <div class="waiting-dot"></div>
         </div>
-        <div class="waiting-opponent" id="waiting-opp-card">
+        <div class="waiting-opponent">
           <div class="waiting-opp-av" id="waiting-opp-av"></div>
           <div class="waiting-opp-info">
             <div class="waiting-opp-name" id="waiting-opp-name">Lawan</div>
@@ -525,7 +627,7 @@ body{
       </div>
     </div>
 
-    <!-- ⑧ BATTLE RESULT -->
+    <!-- BATTLE RESULT -->
     <div class="screen" id="screen-battle-result">
       <div class="battle-result-header">
         <div id="winner-badge-wrap"></div>
@@ -541,7 +643,7 @@ body{
       </button>
     </div>
 
-    <!-- ⑨ SOLO RESULT (fallback) -->
+    <!-- SOLO RESULT (fallback) -->
     <div class="screen" id="screen-result">
       <div class="result-header">
         <div class="result-av" id="result-av"></div>
@@ -567,13 +669,11 @@ body{
   </div>
 </div>
 
-<!-- Firebase SDK -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getDatabase, ref, set, get, update, onValue, off, push }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-/* ─────────────── FIREBASE CONFIG ─────────────── */
 const firebaseConfig = {
   apiKey: "AIzaSyBdEqIzXmVQ_kkZfH-JaWoUqyd-e4rpB7I",
   authDomain: "quizz-1a9d5.firebaseapp.com",
@@ -581,162 +681,229 @@ const firebaseConfig = {
   storageBucket: "quizz-1a9d5.firebasestorage.app",
   messagingSenderId: "1044877623207",
   appId: "1:1044877623207:web:4edea5a416e83a9dc90082",
-  measurementId: "G-7EY0X0WYEF",
   databaseURL: "https://quizz-1a9d5-default-rtdb.asia-southeast1.firebasedatabase.app/"
 };
 const app = initializeApp(firebaseConfig);
 const db  = getDatabase(app);
 
-/* ─────────────── AVATARS ─────────────── */
+/* ─────── AVATARS (10 buah, style baru) ─────── */
 const AVATARS = [
   {
-    id:'samurai', name:'Samurai',
-    svg:`<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="22" cy="44" r="22" fill="#E4E4E2"/>
-      <rect x="14" y="27" width="15" height="17" rx="3" fill="#2A2A2A"/>
-      <circle cx="22" cy="18" r="8" fill="#F0EDE8" stroke="#2A2A2A" stroke-width="1.2"/>
-      <path d="M14 18c0-4.418 3.582-8 8-8s8 3.582 8 8" fill="#2A2A2A"/>
-      <path d="M14 16l-3.5 2 3.5 2" fill="#2A2A2A"/>
-      <path d="M30 16l3.5 2-3.5 2" fill="#2A2A2A"/>
-      <rect x="17.5" y="17" width="3.5" height="2.2" rx="1.1" fill="#2A2A2A"/>
-      <rect x="23" y="17" width="3.5" height="2.2" rx="1.1" fill="#2A2A2A"/>
-      <line x1="30" y1="15" x2="37" y2="8" stroke="#2A2A2A" stroke-width="1.8" stroke-linecap="round"/>
-      <rect x="28.5" y="16.5" width="3" height="1.5" rx=".5" fill="#888" transform="rotate(-45 30 17)"/>
+    id:'dragon', name:'Naga',
+    svg:`<svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="20" cy="40" r="20" fill="#E4E4E2"/>
+      <ellipse cx="20" cy="19" rx="9" ry="10" fill="#3A7A4A"/>
+      <path d="M11 14c0-5 4-9 9-9s9 4 9 9" fill="#2A5A3A"/>
+      <path d="M11 13l-4-5 3 0 1 3z" fill="#2A5A3A"/>
+      <path d="M29 13l4-5-3 0-1 3z" fill="#2A5A3A"/>
+      <ellipse cx="16" cy="19" rx="2.5" ry="2" fill="#1A3A2A"/>
+      <ellipse cx="24" cy="19" rx="2.5" ry="2" fill="#1A3A2A"/>
+      <circle cx="16.8" cy="18.5" r=".9" fill="#88FFAA"/>
+      <circle cx="24.8" cy="18.5" r=".9" fill="#88FFAA"/>
+      <path d="M17 24q3 2 6 0" stroke="#88CCAA" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+      <path d="M20 9l-1.5-3.5L22 8z" fill="#FF6633"/>
+      <rect x="13" y="28" width="14" height="12" rx="3" fill="#2A5A3A"/>
     </svg>`
   },
   {
-    id:'explorer', name:'Explorer',
-    svg:`<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="22" cy="44" r="22" fill="#E4E4E2"/>
-      <rect x="14" y="27" width="16" height="17" rx="3" fill="#8B6914"/>
-      <circle cx="22" cy="18" r="7.5" fill="#F0DDB8" stroke="#5C3A1A" stroke-width="1.2"/>
-      <path d="M14.5 15c0-4.142 3.358-7.5 7.5-7.5s7.5 3.358 7.5 7.5" fill="#5C3A1A"/>
-      <rect x="13" y="13.5" width="18" height="3" rx="1.5" fill="#4A2E0A"/>
-      <circle cx="22" cy="8" r="1.5" fill="#4A2E0A"/>
-      <ellipse cx="18.5" cy="19" rx="2" ry="1.5" fill="#5C3A1A"/>
-      <ellipse cx="25.5" cy="19" rx="2" ry="1.5" fill="#5C3A1A"/>
-      <path d="M19 23q3 1.5 6 0" stroke="#C09060" stroke-width="1.1" stroke-linecap="round" fill="none"/>
+    id:'fox', name:'Rubah',
+    svg:`<svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="20" cy="40" r="20" fill="#E4E4E2"/>
+      <rect x="13" y="27" width="14" height="13" rx="3" fill="#D4621A"/>
+      <ellipse cx="20" cy="18" rx="8.5" ry="9" fill="#E8732A"/>
+      <path d="M11.5 14l-4.5-7 5.5 4z" fill="#E8732A"/>
+      <path d="M28.5 14l4.5-7-5.5 4z" fill="#E8732A"/>
+      <path d="M11.5 14l-4.5-7 5.5 4z" fill="#CC5515"/>
+      <path d="M28.5 14l4.5-7-5.5 4z" fill="#CC5515"/>
+      <ellipse cx="20" cy="21" rx="5" ry="4" fill="#F5C8A0"/>
+      <ellipse cx="16" cy="17" rx="2.2" ry="2" fill="#1A1A1A"/>
+      <ellipse cx="24" cy="17" rx="2.2" ry="2" fill="#1A1A1A"/>
+      <circle cx="16.7" cy="16.5" r=".8" fill="#fff"/>
+      <circle cx="24.7" cy="16.5" r=".8" fill="#fff"/>
+      <ellipse cx="20" cy="20.5" rx="1.2" ry=".8" fill="#C07050"/>
+      <path d="M18 23q2 1.2 4 0" stroke="#C07050" stroke-width="1" stroke-linecap="round" fill="none"/>
     </svg>`
   },
   {
-    id:'robot', name:'Robot',
-    svg:`<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="22" cy="44" r="22" fill="#E4E4E2"/>
-      <rect x="13" y="27" width="18" height="17" rx="3" fill="#C0C0C0" stroke="#888" stroke-width="1"/>
-      <rect x="16" y="30" width="12" height="7" rx="1.5" fill="#E8E8E8" stroke="#AAA" stroke-width=".8"/>
-      <circle cx="19" cy="33.5" r="1.4" fill="#555"/>
-      <circle cx="25" cy="33.5" r="1.4" fill="#555"/>
-      <rect x="13" y="10" width="18" height="15" rx="4" fill="#D0D0D0" stroke="#888" stroke-width="1"/>
-      <line x1="22" y1="10" x2="22" y2="6" stroke="#888" stroke-width="1.4" stroke-linecap="round"/>
-      <circle cx="22" cy="5" r="1.8" fill="#555"/>
-      <rect x="15" y="14" width="14" height="5" rx="2.5" fill="#3A3A3A"/>
-      <rect x="16" y="14.8" width="5" height="3.4" rx="1.2" fill="#AADDFF" opacity=".9"/>
-      <rect x="23" y="14.8" width="5" height="3.4" rx="1.2" fill="#AADDFF" opacity=".9"/>
-      <rect x="16" y="21" width="12" height="2.5" rx="1.2" fill="#888"/>
-      <line x1="19.5" y1="21" x2="19.5" y2="23.5" stroke="#CCC" stroke-width=".8"/>
-      <line x1="24.5" y1="21" x2="24.5" y2="23.5" stroke="#CCC" stroke-width=".8"/>
+    id:'wizard', name:'Penyihir',
+    svg:`<svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="20" cy="40" r="20" fill="#E4E4E2"/>
+      <rect x="13" y="27" width="14" height="13" rx="3" fill="#4A2A8A"/>
+      <circle cx="20" cy="18" r="8" fill="#D4B870"/>
+      <path d="M12 18l-8-3 8 5z M28 18l8-3-8 5z" fill="#4A2A8A"/>
+      <path d="M12 15h16l-8-12z" fill="#4A2A8A"/>
+      <rect x="11" y="14" width="18" height="2.5" rx="1.25" fill="#6A3ABA"/>
+      <circle cx="20" cy="10" r="3" fill="#FFD700" opacity=".9"/>
+      <ellipse cx="16.5" cy="18.5" rx="2.2" ry="2" fill="#3A2A1A"/>
+      <ellipse cx="23.5" cy="18.5" rx="2.2" ry="2" fill="#3A2A1A"/>
+      <circle cx="17.2" cy="18" r=".8" fill="#fff"/>
+      <circle cx="24.2" cy="18" r=".8" fill="#fff"/>
+      <path d="M18 22q2 1.5 4 0" stroke="#B09050" stroke-width="1" stroke-linecap="round" fill="none"/>
+      <circle cx="8" cy="8" r="1.5" fill="#FFD700" opacity=".7"/>
+      <circle cx="32" cy="12" r="1" fill="#FFD700" opacity=".6"/>
+      <circle cx="6" cy="18" r="1" fill="#AA88FF" opacity=".6"/>
     </svg>`
   },
   {
-    id:'witch', name:'Witch',
-    svg:`<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="22" cy="44" r="22" fill="#E4E4E2"/>
-      <path d="M14 27h16l3.5 17H10.5z" fill="#2A1A3E"/>
-      <circle cx="22" cy="19" r="8" fill="#F0E8D0" stroke="#2A1A3E" stroke-width="1"/>
-      <path d="M13 15h18l-9-11z" fill="#2A1A3E"/>
-      <rect x="12" y="14" width="20" height="3" rx="1.5" fill="#2A1A3E"/>
-      <rect x="19.5" y="14.2" width="5" height="2.6" rx=".7" fill="#888"/>
-      <ellipse cx="18.5" cy="19.5" rx="2" ry="1.8" fill="#2A1A3E"/>
-      <ellipse cx="25.5" cy="19.5" rx="2" ry="1.8" fill="#2A1A3E"/>
-      <circle cx="19.2" cy="18.8" r=".7" fill="#fff"/>
-      <circle cx="26.2" cy="18.8" r=".7" fill="#fff"/>
-      <path d="M21 22l1 2.5-1 .6" stroke="#C0956A" stroke-width="1.1" stroke-linecap="round" fill="none"/>
-      <line x1="30" y1="24" x2="38" y2="16" stroke="#5C3A1A" stroke-width="1.8" stroke-linecap="round"/>
-      <polygon points="38,16 36,13 41,14" fill="#2A1A3E"/>
+    id:'cyborg', name:'Cyborg',
+    svg:`<svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="20" cy="40" r="20" fill="#E4E4E2"/>
+      <rect x="13" y="27" width="14" height="13" rx="2" fill="#445566"/>
+      <rect x="16" y="30" width="8" height="5" rx="1.5" fill="#AADDFF" opacity=".4"/>
+      <rect x="12" y="10" width="16" height="15" rx="4" fill="#778899"/>
+      <rect x="14" y="10" width="12" height="7" rx="3.5" fill="#55667A"/>
+      <rect x="14.5" y="16" width="4.5" height="6" rx="1" fill="#3A3A4A"/>
+      <rect x="21" y="16" width="4.5" height="6" rx="1" fill="#AADDFF" opacity=".8"/>
+      <rect x="15" y="17" width="3.5" height="4" rx=".8" fill="#FF4444" opacity=".85"/>
+      <rect x="21.5" y="17" width="3.5" height="4" rx=".8" fill="#AADDFF"/>
+      <rect x="15" y="23" width="10" height="2" rx="1" fill="#556677"/>
+      <line x1="17" y1="23" x2="17" y2="25" stroke="#888" stroke-width=".8"/>
+      <line x1="23" y1="23" x2="23" y2="25" stroke="#888" stroke-width=".8"/>
+      <line x1="20" y1="10" x2="20" y2="7" stroke="#778899" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="20" cy="6" r="1.8" fill="#AADDFF" opacity=".9"/>
     </svg>`
   },
   {
-    id:'pilot', name:'Pilot',
-    svg:`<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="22" cy="44" r="22" fill="#E4E4E2"/>
-      <rect x="13" y="27" width="18" height="17" rx="3" fill="#3A4A6A"/>
-      <path d="M17.5 27c2.5-2.5 7.5-2.5 9 0l-2 5-2.5-2-2.5 2z" fill="#E05A5A"/>
-      <circle cx="22" cy="18" r="8.5" fill="#F0DDB8" stroke="#2A2A2A" stroke-width="1"/>
-      <path d="M13.5 18c0-4.694 3.806-8.5 8.5-8.5s8.5 3.806 8.5 8.5" fill="#3A4A6A"/>
-      <rect x="13.5" y="17" width="17" height="3.5" rx="1.75" fill="#5A3A1A" opacity=".85"/>
-      <circle cx="18.5" cy="18.75" r="3" fill="#C8E0F0" stroke="#3A3A3A" stroke-width="1.1"/>
-      <circle cx="25.5" cy="18.75" r="3" fill="#C8E0F0" stroke="#3A3A3A" stroke-width="1.1"/>
-      <line x1="21.5" y1="18.75" x2="22.5" y2="18.75" stroke="#3A3A3A" stroke-width="1"/>
-      <path d="M18.5 24q3.5 1.8 7 0" stroke="#C09060" stroke-width="1.1" stroke-linecap="round" fill="none"/>
+    id:'pirate', name:'Bajak Laut',
+    svg:`<svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="20" cy="40" r="20" fill="#E4E4E2"/>
+      <rect x="13" y="27" width="14" height="13" rx="3" fill="#2A1A3A" stroke="#1A0A2A" stroke-width=".8"/>
+      <circle cx="20" cy="18" r="8" fill="#F0D8B0"/>
+      <path d="M12 14.5c0-4.4 3.6-8 8-8s8 3.6 8 8" fill="#1A1A1A"/>
+      <rect x="11.5" y="13.5" width="17" height="2.5" rx="1.25" fill="#1A1A1A"/>
+      <rect x="14" y="12" width="12" height="4" rx="2" fill="#CC0000" opacity=".85"/>
+      <rect x="14.5" y="13.5" width="2" height="5" rx="1" fill="#1A1A1A"/>
+      <ellipse cx="16.5" cy="13.5" rx="2" ry="1.8" fill="#1A1A1A"/>
+      <ellipse cx="23.5" cy="19" rx="2.2" ry="2" fill="#2A2A2A"/>
+      <circle cx="24" cy="18.3" r=".8" fill="#fff"/>
+      <rect x="14.5" y="16.5" width="4" height="3" rx="1" fill="#C8A878"/>
+      <path d="M18 23q2 1.5 4 0" stroke="#B09060" stroke-width="1.1" stroke-linecap="round" fill="none"/>
+      <line x1="30" y1="11" x2="36" y2="5" stroke="#888" stroke-width="1.5" stroke-linecap="round"/>
+      <rect x="28.5" y="12" width="3" height="1.5" rx=".5" fill="#888" transform="rotate(-45 30 13)"/>
     </svg>`
   },
   {
-    id:'ninja', name:'Ninja',
-    svg:`<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="22" cy="44" r="22" fill="#E4E4E2"/>
-      <rect x="13" y="27" width="18" height="17" rx="3" fill="#1A1A1A"/>
-      <circle cx="22" cy="18" r="8" fill="#1A1A1A"/>
-      <path d="M14 18c0-4.418 3.582-8 8-8s8 3.582 8 8h-2c0-3.314-2.686-6-6-6s-6 2.686-6 6z" fill="#2A2A2A"/>
-      <rect x="14" y="17" width="16" height="5" rx="2.5" fill="#1A1A1A"/>
-      <ellipse cx="18.5" cy="18.5" rx="2.2" ry="1.8" fill="#FFFFFF" opacity=".9"/>
-      <ellipse cx="25.5" cy="18.5" rx="2.2" ry="1.8" fill="#FFFFFF" opacity=".9"/>
-      <ellipse cx="18.5" cy="18.8" rx="1.1" ry="1.1" fill="#2A2A2A"/>
-      <ellipse cx="25.5" cy="18.8" rx="1.1" ry="1.1" fill="#2A2A2A"/>
-      <path d="M14 20h16" stroke="#2A2A2A" stroke-width="2" stroke-linecap="round"/>
-      <line x1="32" y1="10" x2="38" y2="4" stroke="#888" stroke-width="1.8" stroke-linecap="round"/>
-      <line x1="34" y1="8" x2="36" y2="14" stroke="#888" stroke-width="1.4" stroke-linecap="round"/>
+    id:'alien', name:'Alien',
+    svg:`<svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="20" cy="40" r="20" fill="#E4E4E2"/>
+      <rect x="13" y="27" width="14" height="13" rx="3" fill="#2A5A2A"/>
+      <ellipse cx="20" cy="17" rx="9.5" ry="10.5" fill="#5ABA5A"/>
+      <ellipse cx="16" cy="16" rx="3.5" ry="3" fill="#1A2A1A"/>
+      <ellipse cx="24" cy="16" rx="3.5" ry="3" fill="#1A2A1A"/>
+      <ellipse cx="16.8" cy="15.5" rx="2" ry="1.8" fill="#88FF88"/>
+      <ellipse cx="24.8" cy="15.5" rx="2" ry="1.8" fill="#88FF88"/>
+      <circle cx="17.3" cy="15.2" r=".7" fill="#1A3A1A"/>
+      <circle cx="25.3" cy="15.2" r=".7" fill="#1A3A1A"/>
+      <path d="M20 5c-6 0-10 5-10 10h1c1-4 4-8 9-8s8 4 9 8h1c0-5-4-10-10-10z" fill="#3A8A3A"/>
+      <line x1="15" y1="21" x2="25" y2="21" stroke="#3A8A3A" stroke-width="1.2" stroke-linecap="round"/>
+      <line x1="17" y1="23" x2="23" y2="23" stroke="#3A8A3A" stroke-width="1" stroke-linecap="round"/>
+      <line x1="12" y1="10" x2="9" y2="6" stroke="#5ABA5A" stroke-width="1.2" stroke-linecap="round"/>
+      <line x1="28" y1="10" x2="31" y2="6" stroke="#5ABA5A" stroke-width="1.2" stroke-linecap="round"/>
+      <circle cx="9" cy="5.5" r="1.5" fill="#AAFFAA"/>
+      <circle cx="31" cy="5.5" r="1.5" fill="#AAFFAA"/>
     </svg>`
   },
   {
-    id:'astronaut', name:'Astro',
-    svg:`<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="22" cy="44" r="22" fill="#E4E4E2"/>
-      <rect x="13" y="27" width="18" height="17" rx="3" fill="#E8E8E8" stroke="#AAA" stroke-width="1"/>
-      <rect x="17" y="30" width="10" height="6" rx="1.5" fill="#C8E0F0" stroke="#AAA" stroke-width=".8"/>
-      <circle cx="22" cy="16" r="9" fill="#E8E8E8" stroke="#AAA" stroke-width="1.5"/>
-      <circle cx="22" cy="16" r="6.5" fill="#C8E0F0"/>
-      <ellipse cx="19" cy="14" rx="2.5" ry="1.8" fill="#FFFFFF" opacity=".5"/>
-      <circle cx="22" cy="16" r="4" fill="#8AC4D0" opacity=".6"/>
-      <ellipse cx="20.5" cy="14.5" rx="1.2" ry=".8" fill="#FFFFFF" opacity=".7"/>
-      <rect x="12" y="15" width="3" height="5" rx="1.5" fill="#D0D0D0" stroke="#AAA" stroke-width=".8"/>
-      <rect x="29" y="15" width="3" height="5" rx="1.5" fill="#D0D0D0" stroke="#AAA" stroke-width=".8"/>
+    id:'viking', name:'Viking',
+    svg:`<svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="20" cy="40" r="20" fill="#E4E4E2"/>
+      <rect x="13" y="27" width="14" height="13" rx="3" fill="#4A3020"/>
+      <circle cx="20" cy="19" r="8" fill="#F0C8A0"/>
+      <rect x="11.5" y="12" width="17" height="10" rx="5" fill="#888" stroke="#666" stroke-width="1"/>
+      <circle cx="14.5" cy="14.5" r="2.5" fill="#A0A0A0" stroke="#888" stroke-width=".8"/>
+      <circle cx="25.5" cy="14.5" r="2.5" fill="#A0A0A0" stroke="#888" stroke-width=".8"/>
+      <rect x="18" y="10" width="4" height="3" rx=".5" fill="#888"/>
+      <ellipse cx="16.5" cy="19.5" rx="2.2" ry="2" fill="#2A1A1A"/>
+      <ellipse cx="23.5" cy="19.5" rx="2.2" ry="2" fill="#2A1A1A"/>
+      <circle cx="17.2" cy="19" r=".8" fill="#fff"/>
+      <circle cx="24.2" cy="19" r=".8" fill="#fff"/>
+      <path d="M18 24q2 1.5 4 0" stroke="#C0906A" stroke-width="1.1" stroke-linecap="round" fill="none"/>
+      <path d="M16 26l-4 14" stroke="#D4A060" stroke-width="2" stroke-linecap="round" opacity=".6"/>
+      <path d="M24 26l4 14" stroke="#D4A060" stroke-width="2" stroke-linecap="round" opacity=".6"/>
     </svg>`
   },
   {
-    id:'knight', name:'Knight',
-    svg:`<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="22" cy="44" r="22" fill="#E4E4E2"/>
-      <rect x="13" y="27" width="18" height="17" rx="2" fill="#4A5568" stroke="#2D3748" stroke-width="1"/>
-      <rect x="17" y="27" width="10" height="7" rx="1.5" fill="#718096" stroke="#4A5568" stroke-width=".8"/>
-      <rect x="12" y="10" width="20" height="18" rx="5" fill="#718096" stroke="#4A5568" stroke-width="1.2"/>
-      <rect x="14" y="17" width="16" height="5" rx="2.5" fill="#2D3748"/>
-      <rect x="15.5" y="18" width="5" height="3" rx="1.5" fill="#FFD700" opacity=".8"/>
-      <rect x="23.5" y="18" width="5" height="3" rx="1.5" fill="#FFD700" opacity=".8"/>
-      <rect x="19.5" y="12.5" width="5" height="4.5" rx="2.5" fill="#2D3748"/>
-      <rect x="10.5" y="16" width="3.5" height="7" rx="1.75" fill="#4A5568" stroke="#2D3748" stroke-width=".8"/>
-      <rect x="30" y="16" width="3.5" height="7" rx="1.75" fill="#4A5568" stroke="#2D3748" stroke-width=".8"/>
+    id:'chef', name:'Koki',
+    svg:`<svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="20" cy="40" r="20" fill="#E4E4E2"/>
+      <rect x="13" y="27" width="14" height="13" rx="3" fill="#F5F0E8" stroke="#E0D8D0" stroke-width=".8"/>
+      <circle cx="20" cy="20" r="7.5" fill="#F5DDB8"/>
+      <ellipse cx="20" cy="13.5" rx="7" ry="5" fill="#F5F0E8" stroke="#E0D8D0" stroke-width=".8"/>
+      <circle cx="13.5" cy="12" r="3.5" fill="#F5F0E8" stroke="#E0D8D0" stroke-width=".8"/>
+      <circle cx="26.5" cy="12" r="3.5" fill="#F5F0E8" stroke="#E0D8D0" stroke-width=".8"/>
+      <ellipse cx="16.5" cy="20.5" rx="2.2" ry="2" fill="#2A2A2A"/>
+      <ellipse cx="23.5" cy="20.5" rx="2.2" ry="2" fill="#2A2A2A"/>
+      <circle cx="17.2" cy="20" r=".8" fill="#fff"/>
+      <circle cx="24.2" cy="20" r=".8" fill="#fff"/>
+      <ellipse cx="20" cy="22" rx="1.2" ry=".8" fill="#C07050"/>
+      <path d="M18 24.5q2 1.5 4 0" stroke="#C07050" stroke-width="1.1" stroke-linecap="round" fill="none"/>
+      <line x1="20" y1="28" x2="20" y2="33" stroke="#E0D0C0" stroke-width="2" stroke-linecap="round"/>
+    </svg>`
+  },
+  {
+    id:'idol', name:'Idol',
+    svg:`<svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="20" cy="40" r="20" fill="#E4E4E2"/>
+      <rect x="13" y="27" width="14" height="13" rx="3" fill="#FF6FAA"/>
+      <circle cx="20" cy="18" r="8" fill="#F5C8B8"/>
+      <path d="M12 15.5c0-4.4 3.6-8 8-8s8 3.6 8 8" fill="#1A1A1A"/>
+      <rect x="11.5" y="14.5" width="17" height="3" rx="1.5" fill="#1A1A1A"/>
+      <path d="M12 17.5l-2 0" stroke="#F5C8B8" stroke-width="2" stroke-linecap="round"/>
+      <path d="M28 17.5l2 0" stroke="#F5C8B8" stroke-width="2" stroke-linecap="round"/>
+      <ellipse cx="16.5" cy="19" rx="2.2" ry="2" fill="#1A1A1A"/>
+      <ellipse cx="23.5" cy="19" rx="2.2" ry="2" fill="#1A1A1A"/>
+      <circle cx="17" cy="18.4" r=".8" fill="#fff"/>
+      <circle cx="24" cy="18.4" r=".8" fill="#fff"/>
+      <ellipse cx="16.5" cy="22" rx="1.8" ry=".9" fill="#FF9AB8" opacity=".7"/>
+      <ellipse cx="23.5" cy="22" rx="1.8" ry=".9" fill="#FF9AB8" opacity=".7"/>
+      <path d="M17.5 24q2.5 2 5 0" stroke="#FF6FAA" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+      <circle cx="9" cy="10" r="2" fill="#FFD700" opacity=".8"/>
+      <circle cx="31" cy="8" r="1.5" fill="#FFD700" opacity=".7"/>
+      <circle cx="28" cy="14" r="1" fill="#FF9AB8" opacity=".8"/>
+    </svg>`
+  },
+  {
+    id:'scientist', name:'Ilmuwan',
+    svg:`<svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="20" cy="40" r="20" fill="#E4E4E2"/>
+      <rect x="12" y="27" width="16" height="13" rx="3" fill="#E8EEF5" stroke="#C8D4E0" stroke-width=".8"/>
+      <circle cx="20" cy="18" r="8" fill="#F0E8D8"/>
+      <path d="M12 16c0-4.4 3.6-8 8-8s8 3.6 8 8" fill="#888"/>
+      <ellipse cx="16.2" cy="18.5" rx="2.8" ry="2.5" fill="#E8F4F8" stroke="#88AACC" stroke-width="1"/>
+      <ellipse cx="23.8" cy="18.5" rx="2.8" ry="2.5" fill="#E8F4F8" stroke="#88AACC" stroke-width="1"/>
+      <line x1="19" y1="18.5" x2="21" y2="18.5" stroke="#88AACC" stroke-width="1"/>
+      <ellipse cx="16.5" cy="18.5" rx="1.5" ry="1.5" fill="#2A4A6A"/>
+      <ellipse cx="23.5" cy="18.5" rx="1.5" ry="1.5" fill="#2A4A6A"/>
+      <circle cx="17" cy="18" r=".5" fill="#fff"/>
+      <circle cx="24" cy="18" r=".5" fill="#fff"/>
+      <path d="M18 23.5q2 1.5 4 0" stroke="#B0906A" stroke-width="1" stroke-linecap="round" fill="none"/>
+      <rect x="25" y="24" width="4" height="8" rx="2" fill="#88CCFF" opacity=".6" transform="rotate(-20 27 28)"/>
+      <circle cx="27.5" cy="23" r="1.5" fill="#88CCFF" opacity=".6"/>
     </svg>`
   }
 ];
 
-/* ─────────────── STATE ─────────────── */
+/* ─── STATE ─── */
 let selectedAvatar = null;
 let playerName     = '';
-let playerRole     = null; // 'host' | 'guest'
+let playerRole     = null;
 let roomId         = null;
-let myKey          = null; // 'player1' | 'player2'
+let myKey          = null;
 let questions      = [];
 let cur            = 0;
 let answers        = [];
 let animating      = false;
-let roomListenerRef   = null;   // the actual Firebase ref being listened to
-let roomListenerCb    = null;   // the callback so we can off() it properly
-let resultShown    = false;     // guard: prevent double result
-let timerSecs      = 30;        // per-question time limit
+let roomListenerRef   = null;
+let roomListenerCb    = null;
+let resultShown    = false;
+let timerSecs      = 30;
 let timerRemaining = 30;
 let timerInterval  = null;
+let shakeListenerRef  = null;
+let shakeListenerCb   = null;
+let lastShakeTs    = 0;
 
-/* ─────────────── AUDIO ─────────────── */
+/* ─── AUDIO ─── */
 const actx = new (window.AudioContext || window.webkitAudioContext)();
 function tone(f,t,d,v=0.15,s=0){
   const o=actx.createOscillator(),g=actx.createGain();
@@ -753,12 +920,16 @@ function sndBack(){tone(420,'sine',.08,.1);tone(280,'sine',.12,.12,.05)}
 function sndSelect(){tone(550,'sine',.07,.1);tone(700,'sine',.05,.07,.06)}
 function sndFinish(){tone(330,'sine',.25,.12);tone(415,'sine',.25,.1,.08);tone(495,'sine',.3,.1,.16);tone(660,'sine',.35,.12,.26)}
 function sndWin(){tone(440,'sine',.2,.12);tone(550,'sine',.2,.1,.1);tone(660,'sine',.3,.12,.2);tone(880,'sine',.4,.14,.35)}
+function sndShake(){
+  tone(120,'sawtooth',.15,.2);tone(80,'sawtooth',.2,.18,.05);tone(60,'sawtooth',.25,.15,.1);
+}
 document.addEventListener('click',()=>{if(actx.state==='suspended')actx.resume()},{once:true});
 
-/* ─────────────── GHOSTS ─────────────── */
+/* ─── GHOSTS ─── */
 const ghost1    = document.getElementById('ghost1');
 const ghost2    = document.getElementById('ghost2');
 const mainCard  = document.getElementById('main-card');
+const sceneEl   = document.getElementById('scene');
 const tilts     = ['rotate(-2.8deg)','rotate(-1.6deg)','rotate(-1deg)','rotate(1deg)','rotate(1.8deg)','rotate(2.8deg)','rotate(-3.2deg)','rotate(3.2deg)'];
 function randTilt(){return tilts[Math.floor(Math.random()*tilts.length)]}
 function refreshGhosts(){
@@ -768,7 +939,40 @@ function refreshGhosts(){
 }
 refreshGhosts();
 
-/* ─────────────── CARD TRANSITION ─────────────── */
+/* ─── SHAKE ─── */
+function triggerShake(){
+  sndShake();
+  sceneEl.classList.remove('shake-scene');
+  void sceneEl.offsetWidth;
+  sceneEl.classList.add('shake-scene');
+  setTimeout(()=>sceneEl.classList.remove('shake-scene'),5100);
+}
+
+function listenForShake(code){
+  if(shakeListenerRef && shakeListenerCb){
+    off(shakeListenerRef,'value',shakeListenerCb);
+    shakeListenerRef=null;shakeListenerCb=null;
+  }
+  shakeListenerRef = ref(db,'rooms/'+code+'/shakeTs');
+  shakeListenerCb  = (snap)=>{
+    if(!snap.exists())return;
+    const ts = snap.val();
+    if(ts && ts !== lastShakeTs && ts > Date.now()-8000){
+      lastShakeTs = ts;
+      triggerShake();
+    }
+  };
+  onValue(shakeListenerRef, shakeListenerCb);
+}
+
+function stopShakeListener(){
+  if(shakeListenerRef && shakeListenerCb){
+    off(shakeListenerRef,'value',shakeListenerCb);
+    shakeListenerRef=null;shakeListenerCb=null;
+  }
+}
+
+/* ─── CARD TRANSITION ─── */
 function animateCard(outCls,inCls,afterOut,afterIn){
   if(animating)return;
   animating=true;
@@ -814,7 +1018,7 @@ function currentScreen(){
   return document.querySelector('.screen.active')?.id;
 }
 
-/* ─────────────── AVATAR BUILDER ─────────────── */
+/* ─── AVATAR BUILDER ─── */
 function getAvatarSVG(id){
   const av=AVATARS.find(a=>a.id===id);
   return av?av.svg:'';
@@ -845,7 +1049,7 @@ function updateNamePreviewAv(){
   document.getElementById('name-preview-av').innerHTML=getAvatarSVG(selectedAvatar);
 }
 
-/* ─────────────── ROOM UTILITIES ─────────────── */
+/* ─── ROOM UTILITIES ─── */
 function genCode(){
   const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   let code='';
@@ -855,9 +1059,8 @@ function genCode(){
 
 function stopRoomListener(){
   if(roomListenerRef && roomListenerCb){
-    off(roomListenerRef, 'value', roomListenerCb);
-    roomListenerRef = null;
-    roomListenerCb  = null;
+    off(roomListenerRef,'value',roomListenerCb);
+    roomListenerRef=null;roomListenerCb=null;
   }
 }
 
@@ -875,7 +1078,7 @@ async function loadQuestions(){
   }
 }
 
-/* ─────────────── SPLASH BUTTONS ─────────────── */
+/* ─── SPLASH BUTTONS ─── */
 document.getElementById('btn-create-room').onclick=()=>{
   sndClick();
   playerRole='host';
@@ -889,7 +1092,7 @@ document.getElementById('btn-join-room').onclick=()=>{
   showScreen('screen-splash','screen-avatar');
 };
 
-/* ─────────────── AVATAR → NAME ─────────────── */
+/* ─── AVATAR → NAME ─── */
 document.getElementById('btn-av-next').onclick=()=>{
   if(!selectedAvatar)return;
   sndNext();
@@ -897,7 +1100,7 @@ document.getElementById('btn-av-next').onclick=()=>{
   showScreen('screen-avatar','screen-name');
 };
 
-/* ─────────────── NAME INPUT ─────────────── */
+/* ─── NAME INPUT ─── */
 const nameInput = document.getElementById('name-input');
 nameInput.addEventListener('input',()=>{
   const val=nameInput.value.trim();
@@ -912,7 +1115,7 @@ document.getElementById('btn-name-back').onclick=()=>{
   showScreen('screen-name','screen-avatar','back');
 };
 
-/* ─────────────── NAME NEXT — branch by role ─────────────── */
+/* ─── NAME NEXT — branch by role ─── */
 document.getElementById('btn-name-next').onclick=async()=>{
   if(!playerName)return;
   sndNext();
@@ -923,19 +1126,21 @@ document.getElementById('btn-name-next').onclick=async()=>{
   }
 };
 
-/* ─────────────── CREATE ROOM FLOW ─────────────── */
+/* ─── CREATE ROOM FLOW ─── */
 async function enterCreateRoom(){
   await loadQuestions();
   const code=genCode();
   roomId=code;
   myKey='player1';
-  timerSecs = Math.max(5, Math.min(120, parseInt(document.getElementById('timer-input').value)||30));
+  // FIX: Read timer from input at this moment, not later
+  const inputVal = parseInt(document.getElementById('timer-input').value);
+  timerSecs = isNaN(inputVal) ? 30 : Math.max(5, Math.min(120, inputVal));
 
   const roomData={
     code,
     status:'waiting',
     createdAt: Date.now(),
-    timerSecs,
+    timerSecs: timerSecs,
     questions: questions,
     player1:{
       name: playerName,
@@ -965,7 +1170,7 @@ function listenCreateRoom(code){
     renderRoomPlayers(data);
     if(data.status==='playing'){
       stopRoomListener();
-      showScreen('screen-create-room','screen-quiz',()=>{ setupQuiz(data); });
+      showScreen('screen-create-room','screen-battle-intro',()=>{ runBattleIntro(data); });
     }
   };
   onValue(roomListenerRef, roomListenerCb);
@@ -974,18 +1179,15 @@ function listenCreateRoom(code){
 function renderRoomPlayers(data){
   const list=document.getElementById('room-players-list');
   list.innerHTML='';
-  const p1row=makePlayerRow(
+  list.appendChild(makePlayerRow(
     data?.player1?.name||playerName,
     data?.player1?.avatar||selectedAvatar,
     true,'Player 1 (Kamu)'
-  );
-  list.appendChild(p1row);
+  ));
   if(data?.player2){
-    const p2row=makePlayerRow(data.player2.name,data.player2.avatar,true,'Player 2');
-    list.appendChild(p2row);
+    list.appendChild(makePlayerRow(data.player2.name,data.player2.avatar,true,'Player 2'));
   } else {
-    const p2row=makePlayerRow('Menunggu...','',false,'Player 2');
-    list.appendChild(p2row);
+    list.appendChild(makePlayerRow('Menunggu...','',false,'Player 2'));
   }
 }
 
@@ -1011,7 +1213,7 @@ document.getElementById('btn-cancel-room').onclick=async()=>{
   showScreen('screen-create-room','screen-splash');
 };
 
-/* ─────────────── JOIN ROOM FLOW ─────────────── */
+/* ─── JOIN ROOM FLOW ─── */
 const joinInput=document.getElementById('join-code-input');
 joinInput.addEventListener('input',()=>{
   joinInput.value=joinInput.value.toUpperCase().replace(/[^A-Z0-9]/g,'');
@@ -1038,7 +1240,8 @@ document.getElementById('btn-join-confirm').onclick=async()=>{
     roomId=code;
     myKey='player2';
     questions=data.questions||FALLBACK_QUESTIONS;
-    timerSecs=data.timerSecs||30;
+    // FIX: Read timerSecs from room data (set by host)
+    timerSecs = data.timerSecs || 30;
 
     await update(ref(db,'rooms/'+code),{
       'player2/name': playerName,
@@ -1051,9 +1254,9 @@ document.getElementById('btn-join-confirm').onclick=async()=>{
 
     showJoinStatus('Bergabung! Memulai battle...','success');
     setTimeout(()=>{
-      showScreen('screen-join-room','screen-quiz',()=>{
+      showScreen('screen-join-room','screen-battle-intro',()=>{
         get(ref(db,'rooms/'+code)).then(s=>{
-          if(s.exists()) setupQuiz(s.val());
+          if(s.exists()) runBattleIntro(s.val());
         });
       });
     },600);
@@ -1069,12 +1272,74 @@ function showJoinStatus(msg,type){
   el.style.display='block';
 }
 
-/* ─────────────── QUIZ SETUP ─────────────── */
+/* ─── BATTLE INTRO ANIMATION ─── */
+function runBattleIntro(roomData){
+  const p1=roomData.player1;
+  const p2=roomData.player2||{name:'Lawan',avatar:''};
+  const me   = myKey==='player1' ? p1 : p2;
+  const them = myKey==='player1' ? p2 : p1;
+
+  const wrap = document.getElementById('intro-wrap');
+  wrap.innerHTML='';
+
+  // Phase 1: show players
+  wrap.innerHTML=`
+    <div class="intro-players-row" id="intro-players-row">
+      <div class="intro-player-card me">
+        <div class="intro-av pulse">${getAvatarSVG(me.avatar)}</div>
+        <div class="intro-name">${me.name}</div>
+        <div class="intro-tag">Kamu</div>
+      </div>
+      <div class="intro-vs-wrap">VS</div>
+      <div class="intro-player-card opp">
+        <div class="intro-av">${getAvatarSVG(them.avatar)}</div>
+        <div class="intro-name">${them.name}</div>
+        <div class="intro-tag">Lawan</div>
+      </div>
+    </div>
+    <div class="intro-battle-text" id="intro-go" style="margin-top:28px"></div>
+    <div class="intro-sub" id="intro-sub" style="opacity:0">${questions.length} soal · ${timerSecs}s per soal</div>
+  `;
+
+  // Show sub after players appear
+  setTimeout(()=>{
+    const sub = document.getElementById('intro-sub');
+    if(sub){ sub.style.transition='opacity .5s'; sub.style.opacity='1'; }
+  }, 900);
+
+  // Countdown 3-2-1-GO
+  const countdowns = [3,2,1,'GO!'];
+  let ci = 0;
+  function nextCount(){
+    const el = document.getElementById('intro-go');
+    if(!el) return;
+    const val = countdowns[ci];
+    el.textContent = val;
+    el.className='intro-battle-text go';
+    el.addEventListener('animationend', function h(){
+      el.removeEventListener('animationend',h);
+      el.className='intro-battle-text';
+      ci++;
+      if(ci < countdowns.length){
+        setTimeout(nextCount, 80);
+      } else {
+        // Transition to quiz
+        setTimeout(()=>{
+          document.getElementById('screen-battle-intro').classList.remove('active');
+          document.getElementById('screen-quiz').classList.add('active');
+          setupQuiz(roomData);
+        }, 200);
+      }
+    });
+  }
+  setTimeout(nextCount, 1200);
+}
+
+/* ─── QUIZ SETUP ─── */
 function setupQuiz(roomData){
   cur=0;
   answers=Array(questions.length).fill(null);
 
-  // populate battle vs bar
   const p1=roomData.player1;
   const p2=roomData.player2||{name:'?',avatar:''};
   const me   = myKey==='player1' ? p1 : p2;
@@ -1099,30 +1364,30 @@ function setupQuiz(roomData){
   renderQuestion();
   startTimer();
   listenRoomDuringQuiz();
+  listenForShake(roomId);
 }
 
-/* ─────────────── ROOM LISTENER DURING QUIZ ─────────────── */
+/* ─── ROOM LISTENER DURING QUIZ ─── */
 function listenRoomDuringQuiz(){
   stopRoomListener();
   resultShown = false;
   roomListenerRef = ref(db,'rooms/'+roomId);
   roomListenerCb  = (snap)=>{
     if(!snap.exists())return;
-    if(resultShown)return;  // guard: don't fire twice
+    if(resultShown)return;
     const data=snap.val();
     if(data.player1?.done && data.player2?.done){
       resultShown=true;
       stopRoomListener();
-      const cs=currentScreen();
-      if(cs==='screen-waiting-opponent'||cs==='screen-quiz'){
-        showBattleResult(data);
-      }
+      stopShakeListener();
+      // Show result on BOTH phones - no matter what screen we are on
+      showBattleResult(data);
     }
   };
   onValue(roomListenerRef, roomListenerCb);
 }
 
-/* ─────────────── PROGRESS ─────────────── */
+/* ─── PROGRESS ─── */
 const progressEl = document.getElementById('progress');
 const closeBtn   = document.getElementById('close-btn');
 function renderProgress(){
@@ -1134,7 +1399,7 @@ function renderProgress(){
   });
 }
 
-/* ─────────────── TIMER ─────────────── */
+/* ─── TIMER ─── */
 function stopTimer(){
   if(timerInterval){ clearInterval(timerInterval); timerInterval=null; }
 }
@@ -1148,7 +1413,6 @@ function startTimer(){
     updateTimerUI(timerRemaining, timerSecs);
     if(timerRemaining <= 0){
       stopTimer();
-      // auto-submit current question and move on
       autoAdvance();
     }
   }, 1000);
@@ -1161,7 +1425,6 @@ function updateTimerUI(remaining, total){
   disp.textContent = remaining;
   const pct = Math.max(0, remaining/total*100);
   bar.style.width = pct+'%';
-  // colour: green → yellow → red
   if(pct > 50)      { bar.style.background='#1A1A1A'; disp.style.color='#1A1A1A'; }
   else if(pct > 25) { bar.style.background='#C47A00'; disp.style.color='#C47A00'; }
   else              { bar.style.background='#C04040'; disp.style.color='#C04040'; }
@@ -1169,16 +1432,12 @@ function updateTimerUI(remaining, total){
 
 function autoAdvance(){
   if(animating) return;
-  // save current answer (whatever is checked, even null)
   const sel = optsEl.querySelector('input:checked');
   if(sel) answers[cur] = parseInt(sel.value);
-  // else answers[cur] stays null (unanswered)
-
   sndNext();
   if(cur < questions.length-1){
     animateCard('fly-out','fly-in',()=>{ cur++; renderQuestion(); startTimer(); });
   } else {
-    // last question — submit
     animateCard('fly-out','fly-in',()=>{
       document.getElementById('screen-quiz').classList.remove('active');
       submitAnswers();
@@ -1187,7 +1446,7 @@ function autoAdvance(){
   }
 }
 
-/* ─────────────── RENDER QUESTION ─────────────── */
+/* ─── RENDER QUESTION ─── */
 const qNumEl  = document.getElementById('q-num');
 const qTextEl = document.getElementById('q-text');
 const optsEl  = document.getElementById('opts');
@@ -1207,7 +1466,16 @@ function renderQuestion(){
     const input=document.createElement('input');
     input.type='radio';input.name='opt';input.value=i;
     if(answers[cur]===i)input.checked=true;
-    input.addEventListener('change',()=>sndSelect());
+    input.addEventListener('change',()=>{
+      sndSelect();
+      // Check if wrong answer — trigger shake on both phones
+      const q = questions[cur];
+      const correctAns = q.ans !== undefined ? q.ans : q.answer;
+      const chosen = parseInt(input.value);
+      if(chosen !== correctAns && roomId){
+        update(ref(db,'rooms/'+roomId),{shakeTs: Date.now()});
+      }
+    });
     const radio=document.createElement('span');radio.className='radio';
     const dot=document.createElement('span');dot.className='radio-dot';
     radio.appendChild(dot);
@@ -1218,7 +1486,7 @@ function renderQuestion(){
   renderProgress();
 }
 
-/* ─────────────── QUIZ NAV ─────────────── */
+/* ─── QUIZ NAV ─── */
 btnNext.addEventListener('click',()=>{
   if(animating)return;
   const sel=optsEl.querySelector('input:checked');
@@ -1250,6 +1518,7 @@ closeBtn.addEventListener('click',()=>{
   if(confirm('Keluar dari battle? Progress akan hilang.')){
     stopTimer();
     stopRoomListener();
+    stopShakeListener();
     resetAll();
     animateCard('fly-out','fly-in',()=>{
       document.getElementById('screen-quiz').classList.remove('active');
@@ -1258,29 +1527,14 @@ closeBtn.addEventListener('click',()=>{
   }
 });
 
-/* ─────────────── SUBMIT ANSWERS ─────────────── */
-async function submitAnswers(){
-  stopTimer();
-
-  let score=0;
-  questions.forEach((q,i)=>{
-    const ans=q.ans!==undefined?q.ans:q.answer;
-    if(answers[i]===ans)score++;
-  });
-
-  // show waiting screen first
-  const roomSnap=await get(ref(db,'rooms/'+roomId));
-  const roomData=roomSnap.val();
-  const otherKey=myKey==='player1'?'player2':'player1';
-  const opponent=roomData?.[otherKey];
+/* ─── SUBMIT ANSWERS ─── */
+];
 
   document.getElementById('waiting-opp-av').innerHTML=getAvatarSVG(opponent?.avatar||'');
   document.getElementById('waiting-opp-name').textContent=opponent?.name||'Lawan';
   document.getElementById('waiting-opp-progress').textContent='Sedang mengerjakan...';
   document.getElementById('screen-waiting-opponent').classList.add('active');
 
-  // Write done=true to Firebase THEN let the listener handle showing result
-  // resultShown guard in the listener prevents double-fire
   try{
     const updates={};
     updates[`rooms/${roomId}/${myKey}/done`]=true;
@@ -1288,10 +1542,37 @@ async function submitAnswers(){
     updates[`rooms/${roomId}/${myKey}/answers`]=answers;
     await update(ref(db),updates);
   } catch(e){ console.error('submit error',e); }
-  // Listener (listenRoomDuringQuiz) will detect both done and call showBattleResult
+
+  if(!resultShown){
+    const freshSnap = await get(ref(db,'rooms/'+roomId));
+    if(freshSnap.exists()){
+      const freshData = freshSnap.val();
+      if(freshData.player1?.done && freshData.player2?.done){
+        if(!resultShown){
+          resultShown=true;
+          stopRoomListener();
+          showBattleResult(freshData);
+          return;
+        }
+      }
+    }
+  }
+
+  stopRoomListener();
+  roomListenerRef = ref(db,'rooms/'+roomId);
+  roomListenerCb  = (snap)=>{
+    if(!snap.exists())return;
+    if(resultShown)return;
+    const data=snap.val();
+    if(data.player1?.done && data.player2?.done){
+      resultShown=true;
+      stopRoomListener();
+      showBattleResult(data);
+    }
+  };
+  onValue(roomListenerRef, roomListenerCb);
 }
 
-/* ─────────────── BATTLE RESULT ─────────────── */
 async function showBattleResult(roomData){
   sndWin();
   const p1=roomData.player1;
@@ -1299,31 +1580,23 @@ async function showBattleResult(roomData){
   const me   = myKey==='player1' ? p1 : p2;
   const them = myKey==='player1' ? p2 : p1;
 
-  // Save match to DB
   try{
     await push(ref(db,'matches'),{
-      roomId,
-      createdAt: Date.now(),
-      player1:{ name:p1.name, avatar:p1.avatar, score:p1.score },
-      player2:{ name:p2.name, avatar:p2.avatar, score:p2.score },
-      winner: p1.score>p2.score?'player1': p2.score>p1.score?'player2':'draw'
+      roomId,createdAt:Date.now(),
+      player1:{name:p1.name,avatar:p1.avatar,score:p1.score},
+      player2:{name:p2.name,avatar:p2.avatar,score:p2.score},
+      winner:p1.score>p2.score?'player1':p2.score>p1.score?'player2':'draw'
     });
   } catch(e){}
 
-  const myScore   = me.score||0;
-  const oppScore  = them.score||0;
-  const iWin      = myScore > oppScore;
-  const isDraw    = myScore === oppScore;
+  const myScore=me.score||0,oppScore=them.score||0;
+  const iWin=myScore>oppScore,isDraw=myScore===oppScore;
 
-  // badge
   const badgeWrap=document.getElementById('winner-badge-wrap');
   if(isDraw){
     badgeWrap.innerHTML=`<div class="battle-winner-badge draw" style="margin-bottom:8px">Seri!</div>`;
   } else if(iWin){
-    badgeWrap.innerHTML=`<div class="battle-winner-badge" style="margin-bottom:8px">
-      <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><path d="M6 1L7.5 4.5H11L8.5 6.5L9.5 10L6 8L2.5 10L3.5 6.5L1 4.5H4.5z"/></svg>
-      Kamu Menang!
-    </div>`;
+    badgeWrap.innerHTML=`<div class="battle-winner-badge" style="margin-bottom:8px"><svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><path d="M6 1L7.5 4.5H11L8.5 6.5L9.5 10L6 8L2.5 10L3.5 6.5L1 4.5H4.5z"/></svg>Kamu Menang!</div>`;
   } else {
     badgeWrap.innerHTML=`<div class="battle-winner-badge draw" style="margin-bottom:8px">Kalah</div>`;
   }
@@ -1331,33 +1604,25 @@ async function showBattleResult(roomData){
   document.getElementById('battle-result-title').textContent=isDraw?'Battle Seri!':iWin?'Kamu Menang!':them.name+' Menang';
   document.getElementById('battle-result-sub').textContent='Battle selesai — '+questions.length+' soal';
 
-  const scoreRow=document.getElementById('battle-score-row');
-  scoreRow.innerHTML=`
+  document.getElementById('battle-score-row').innerHTML=`
     <div class="battle-score-card${iWin?' winner-card':''}">
-      <div class="battle-score-av-wrap${iWin?' dark':''}">
-        ${getAvatarSVG(me.avatar)}
-      </div>
+      <div class="battle-score-av-wrap${iWin?' dark':''}">${getAvatarSVG(me.avatar)}</div>
       <div class="battle-score-name">${me.name}</div>
       <div class="battle-score-pts">${myScore}</div>
       <div class="battle-score-label">poin</div>
     </div>
     <div class="battle-score-vs">VS</div>
     <div class="battle-score-card${!iWin&&!isDraw?' winner-card':''}">
-      <div class="battle-score-av-wrap${!iWin&&!isDraw?' dark':''}">
-        ${getAvatarSVG(them.avatar)}
-      </div>
+      <div class="battle-score-av-wrap${!iWin&&!isDraw?' dark':''}">${getAvatarSVG(them.avatar)}</div>
       <div class="battle-score-name">${them.name}</div>
       <div class="battle-score-pts">${oppScore}</div>
       <div class="battle-score-label">poin</div>
-    </div>
-  `;
+    </div>`;
 
-  // recap
   const recapEl=document.getElementById('battle-recap');
   recapEl.innerHTML='';
-  const myAnswers=me.answers||[];
-  questions.forEach((q,i)=>{
-    const ua=myAnswers[i];
+  (me.answers||[]).forEach((ua,i)=>{
+    const q=questions[i];
     const correctAns=q.ans!==undefined?q.ans:q.answer;
     const ok=ua===correctAns;
     const opts=q.opts||q.options||[];
@@ -1365,34 +1630,25 @@ async function showBattleResult(roomData){
     item.className='recap-item '+(ok?'correct':'wrong');
     const icoOk=`<svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#1A1A1A" stroke-width="1.4"/><path d="M5 8.5L7 10.5L11 6" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
     const icoNo=`<svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#C0C0C0" stroke-width="1.4"/><path d="M5.5 5.5L10.5 10.5M10.5 5.5L5.5 10.5" stroke="#C0C0C0" stroke-width="1.5" stroke-linecap="round"/></svg>`;
-    const uaLabel=ua!=null?opts[ua]:'(tidak dijawab)';
-    item.innerHTML=`<span class="recap-icon">${ok?icoOk:icoNo}</span><div><div class="recap-q">${q.q||q.question||''}</div><div class="recap-a">${uaLabel}</div>${!ok?`<div class="recap-correct-ans">Benar: ${opts[correctAns]}</div>`:''}</div>`;
+    item.innerHTML=`<span class="recap-icon">${ok?icoOk:icoNo}</span><div><div class="recap-q">${q.q||q.question||''}</div><div class="recap-a">${ua!=null?opts[ua]:'(tidak dijawab)'}</div>${!ok?`<div class="recap-correct-ans">Benar: ${opts[correctAns]}</div>`:''}</div>`;
     recapEl.appendChild(item);
   });
 
-  const cs=currentScreen();
-  // cs could be screen-waiting-opponent or screen-quiz (if both finish at same time)
-  // remove whichever is active, show battle result cleanly
-  animateCard('fly-out','fly-in',()=>{
-    document.querySelectorAll('.screen.active').forEach(s=>s.classList.remove('active'));
-    document.getElementById('screen-battle-result').classList.add('active');
-  });
+  document.querySelectorAll('.screen.active').forEach(s=>s.classList.remove('active'));
+  stopTimer();
+  document.getElementById('screen-battle-result').classList.add('active');
 }
 
 document.getElementById('btn-battle-restart').onclick=()=>{
-  sndBack();
-  stopRoomListener();
-  resetAll();
+  sndBack();stopRoomListener();stopShakeListener();resetAll();
   animateCard('fly-out','fly-in',()=>{
     document.getElementById('screen-battle-result').classList.remove('active');
     document.getElementById('screen-splash').classList.add('active');
   });
 };
 
-/* ─────────────── RESTART (solo fallback) ─────────────── */
 document.getElementById('btn-restart').addEventListener('click',()=>{
-  sndBack();
-  resetAll();
+  sndBack();resetAll();
   animateCard('fly-out','fly-in',()=>{
     document.getElementById('screen-result').classList.remove('active');
     document.getElementById('screen-splash').classList.add('active');
@@ -1400,40 +1656,27 @@ document.getElementById('btn-restart').addEventListener('click',()=>{
 });
 
 function resetAll(){
-  stopTimer();
-  stopRoomListener();
-  resultShown    = false;
-  selectedAvatar = null;
-  playerName     = '';
-  playerRole     = null;
-  roomId         = null;
-  myKey          = null;
-  cur            = 0;
-  answers        = [];
-  animating      = false;
-  timerSecs      = 30;
-  timerRemaining = 30;
+  stopTimer();stopRoomListener();stopShakeListener();
+  resultShown=false;selectedAvatar=null;playerName='';playerRole=null;
+  roomId=null;myKey=null;cur=0;answers=[];animating=false;
+  timerSecs=30;timerRemaining=30;lastShakeTs=0;
   nameInput.value='';
-  document.getElementById('btn-name-next').disabled=true;
-  document.getElementById('btn-name-next').style.opacity='.4';
-  document.getElementById('btn-name-next').style.cursor='not-allowed';
-  document.getElementById('btn-av-next').disabled=true;
-  document.getElementById('btn-av-next').style.opacity='.4';
-  document.getElementById('btn-av-next').style.cursor='not-allowed';
+  ['btn-name-next','btn-av-next'].forEach(id=>{
+    const b=document.getElementById(id);
+    b.disabled=true;b.style.opacity='.4';b.style.cursor='not-allowed';
+  });
   document.getElementById('join-code-input').value='';
-  const js=document.getElementById('join-room-status');
-  js.style.display='none';
-  // also hide waiting screen if visible
+  document.getElementById('join-room-status').style.display='none';
   document.getElementById('screen-waiting-opponent').classList.remove('active');
+  document.getElementById('screen-battle-intro').classList.remove('active');
 }
 
-/* ─────────────── FALLBACK QUESTIONS ─────────────── */
 const FALLBACK_QUESTIONS=[
-  { q:"2 + 2 × 5 = ?", opts:["20","12","25","10"], ans:1 },
-  { q:"Berapa hasil dari 15% dari 200?", opts:["25","30","20","35"], ans:1 },
-  { q:"Jika x² = 81, berapakah x (positif)?", opts:["7","8","9","10"], ans:2 },
-  { q:"Volume kubus dengan sisi 4 cm adalah?", opts:["16 cm³","32 cm³","48 cm³","64 cm³"], ans:3 },
-  { q:"Berapakah FPB dari 24 dan 36?", opts:["6","8","12","18"], ans:2 },
+  {q:"2 + 2 × 5 = ?",opts:["20","12","25","10"],ans:1},
+  {q:"Berapa hasil dari 15% dari 200?",opts:["25","30","20","35"],ans:1},
+  {q:"Jika x² = 81, berapakah x (positif)?",opts:["7","8","9","10"],ans:2},
+  {q:"Volume kubus dengan sisi 4 cm adalah?",opts:["16 cm³","32 cm³","48 cm³","64 cm³"],ans:3},
+  {q:"Berapakah FPB dari 24 dan 36?",opts:["6","8","12","18"],ans:2},
 ];
 
 refreshGhosts();
