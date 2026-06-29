@@ -1528,11 +1528,25 @@ closeBtn.addEventListener('click',()=>{
 });
 
 /* ─── SUBMIT ANSWERS ─── */
-];
+async function submitAnswers(){
+  const q_list = questions;
+  let score = 0;
+  answers.forEach((ua, i) => {
+    const q = q_list[i];
+    const correctAns = q.ans !== undefined ? q.ans : q.answer;
+    if (ua === correctAns) score++;
+  });
+
+  const roomData = await get(ref(db,'rooms/'+roomId)).then(s=>s.val()).catch(()=>null);
+  const p1 = roomData?.player1 || {};
+  const p2 = roomData?.player2 || {};
+  const opponent = myKey === 'player1' ? p2 : p1;
 
   document.getElementById('waiting-opp-av').innerHTML=getAvatarSVG(opponent?.avatar||'');
   document.getElementById('waiting-opp-name').textContent=opponent?.name||'Lawan';
   document.getElementById('waiting-opp-progress').textContent='Sedang mengerjakan...';
+
+  document.querySelectorAll('.screen.active').forEach(s=>s.classList.remove('active'));
   document.getElementById('screen-waiting-opponent').classList.add('active');
 
   try{
